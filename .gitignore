@@ -1,0 +1,7 @@
+env
+__pycache__
+.flatpak-builder/
+build-dir
+**/__pycache__
+run
+repo

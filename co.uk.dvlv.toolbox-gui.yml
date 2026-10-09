@@ -1,0 +1,51 @@
+app-id: co.uk.dvlv.toolbox-gui
+runtime: org.gnome.Platform
+runtime-version: '42'
+sdk: org.gnome.Sdk
+finish-args:
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --filesystem=xdg-data
+  - --filesystem=~/.icons
+  - --filesystem=xdg-download:ro
+  - --talk-name=org.freedesktop.Flatpak
+command: toolbox-gui
+modules:
+  - name: runner
+    buildsystem: simple
+    build-commands:
+      - install -D toolbox-gui-fp /app/bin/toolbox-gui
+      - cp -r src /app/src
+      - mkdir /app/icons
+      - cp icons/co.uk.dvlv.toolbox-gui.svg /app/icons/co.uk.dvlv.toolbox-gui.svg
+
+      - mkdir -p /app/share/applications
+      - install -D co.uk.dvlv.toolbox-gui.desktop /app/share/applications/
+
+      - install -Dp -m 644 co.uk.dvlv.toolbox-gui.metainfo.xml /app/share/metainfo/co.uk.dvlv.toolbox-gui.metainfo.xml
+
+      - mkdir -p /app/share/icons/hicolor/scalable/apps
+      - install -D icons/co.uk.dvlv.toolbox-gui.svg /app/share/icons/hicolor/scalable/apps
+    sources:
+      - type: file
+        path: co.uk.dvlv.toolbox-gui.desktop
+
+      - type: file
+        path: icons/co.uk.dvlv.toolbox-gui.svg
+
+      - type: file
+        path: co.uk.dvlv.toolbox-gui.metainfo.xml
+        
+      - type: file
+        path: src/echo_into_file.sh
+        
+      - type: file
+        path: toolbox-gui-fp
+
+      - type: dir
+        path: icons
+        dest: icons
+
+      - type: dir
+        path: src
+        dest: src
